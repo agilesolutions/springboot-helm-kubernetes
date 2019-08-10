@@ -1,0 +1,13 @@
+## Builds a Docker image with a beta release
+
+The image is tagged with the **build display name** suffixed with the **branch name**
+
+**Arguments:**
+
+* **image**: The name of the Docker image (e.g. `vfarcic/go-demo-3`).
+* **sudo**: Whether to prefix commands with `sudo`. Default value is `true`
+
+**Requirements:**
+
+* A node with Docker
+* Docker Hub credentials with the ID **docker**

@@ -1,0 +1,212 @@
+chartmuseum:
+  env:
+    open:
+      DISABLE_API: false
+      AUTH_ANONYMOUS_GET: true
+    secret:
+      BASIC_AUTH_USER: admin # Change me!
+      BASIC_AUTH_PASS: admin # Change me!
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 80m
+      memory: 64Mi
+  persistence:
+    enabled: true
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+      ingress.kubernetes.io/ssl-redirect: "false"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    hosts:
+      cm.34.210.146.155.nip.io: # Change me!
+      - /
+
+jenkins:
+  Master:
+    ImageTag: "2.129-alpine"
+    Cpu: "500m"
+    Memory: "500Mi"
+    ServiceType: ClusterIP
+    UseSecurity: false
+    ServiceAnnotations:
+      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+    GlobalLibraries: true
+    InstallPlugins:
+    - durable-task:1.22
+    - workflow-durable-task-step:2.19
+    - workflow-cps@2.70
+    - blueocean:1.7.1
+    - credentials:2.1.18
+    - ec2:1.39
+    - git:3.10.0
+    - git-client:2.7.3
+    - github:1.29.2
+    - kubernetes:1.12.3
+    - pipeline-utility-steps:2.1.0
+    - pipeline-model-definition:1.3.1
+    - script-security:1.44
+    - persistent-parameter@1.1
+    - thinBackup:1.9
+    - workflow-aggregator:2.5
+    - ssh-slaves:1.26
+    - ssh-agent:1.15
+    - jdk-tool:1.1
+    - command-launcher:1.2
+    - pegdown-formatter:1.3
+    - jira-steps:1.4.5
+    - jira-ext:0.7
+    - jira-trigger@1.0.0
+    - jira@3.0.7
+    - persistent-parameter:1.0
+    jobs:
+      release-demo: |-
+        <?xml version='1.1' encoding='UTF-8'?>
+        <flow-definition plugin="workflow-job@2.32">
+          <description>Publish Demo to docker registry and helm repository</description>
+          <keepDependencies>false</keepDependencies>
+          <properties>
+            <hudson.model.ParametersDefinitionProperty>
+              <parameterDefinitions>
+                <com.gem.persistentparameter.PersistentTextParameterDefinition plugin="persistent-parameter@1.1">
+                  <name>Version</name>
+                  <description></description>
+                  <defaultValue>Released version</defaultValue>
+                  <successfulOnly>false</successfulOnly>
+                </com.gem.persistentparameter.PersistentTextParameterDefinition>
+              </parameterDefinitions>
+            </hudson.model.ParametersDefinitionProperty>
+            <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.7"/>
+          </properties>
+          <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2.70">
+            <scm class="hudson.plugins.git.GitSCM" plugin="git@3.10.0">
+              <configVersion>2</configVersion>
+              <userRemoteConfigs>
+                <hudson.plugins.git.UserRemoteConfig>
+                  <url>https://bitbucket.agilesolutions.com/scm/res/springboot-helm-kubernetes.git</url>
+                </hudson.plugins.git.UserRemoteConfig>
+              </userRemoteConfigs>
+              <branches>
+                <hudson.plugins.git.BranchSpec>
+                  <name>*/master</name>
+                </hudson.plugins.git.BranchSpec>
+              </branches>
+              <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+              <submoduleCfg class="list"/>
+              <extensions/>
+            </scm>
+            <scriptPath>pipelines/release/Jenkinsfile</scriptPath>
+            <lightweight>true</lightweight>
+          </definition>
+          <triggers/>
+          <disabled>false</disabled>
+        </flow-definition>
+      deploy-demo: |-
+        <?xml version='1.1' encoding='UTF-8'?>
+        <flow-definition plugin="workflow-job@2.32">
+          <description>Deploy demo from helm chart</description>
+          <keepDependencies>false</keepDependencies>
+          <properties>
+            <hudson.model.ParametersDefinitionProperty>
+              <parameterDefinitions>
+                <com.gem.persistentparameter.PersistentTextParameterDefinition plugin="persistent-parameter@1.1">
+                  <name>Artifact</name>
+                  <description></description>
+                  <defaultValue>Deployed artifact</defaultValue>
+                  <successfulOnly>false</successfulOnly>
+                </com.gem.persistentparameter.PersistentTextParameterDefinition>
+                <com.gem.persistentparameter.PersistentTextParameterDefinition plugin="persistent-parameter@1.1">
+                  <name>Version</name>
+                  <description></description>
+                  <defaultValue>Deployed version</defaultValue>
+                  <successfulOnly>false</successfulOnly>
+                </com.gem.persistentparameter.PersistentTextParameterDefinition>
+              </parameterDefinitions>
+            </hudson.model.ParametersDefinitionProperty>
+            <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.7"/>
+          </properties>
+          <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2.70">
+            <scm class="hudson.plugins.git.GitSCM" plugin="git@3.10.0">
+              <configVersion>2</configVersion>
+              <userRemoteConfigs>
+                <hudson.plugins.git.UserRemoteConfig>
+                  <url>https://bitbucket.agilesolutions.com/scm/res/springboot-helm-kubernetes.git</url>
+                </hudson.plugins.git.UserRemoteConfig>
+              </userRemoteConfigs>
+              <branches>
+                <hudson.plugins.git.BranchSpec>
+                  <name>*/master</name>
+                </hudson.plugins.git.BranchSpec>
+              </branches>
+              <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+              <submoduleCfg class="list"/>
+              <extensions/>
+            </scm>
+            <scriptPath>pipelines/deploy/Jenkinsfile</scriptPath>
+            <lightweight>true</lightweight>
+          </definition>
+          <triggers/>
+          <disabled>false</disabled>
+        </flow-definition>
+      jira-deploy-demo: |-
+        <?xml version='1.1' encoding='UTF-8'?>
+        <flow-definition plugin="workflow-job@2.32">
+          <actions/>
+          <description></description>
+          <keepDependencies>false</keepDependencies>
+          <properties>
+            <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.7"/>
+            <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+              <triggers>
+                <com.ceilfors.jenkins.plugins.jiratrigger.JiraChangelogTrigger plugin="jira-trigger@1.0.0">
+                  <spec></spec>
+                  <jqlFilter>project=demo and issuetype = Deployment</jqlFilter>
+                  <parameterMappings/>
+                  <changelogMatchers/>
+                </com.ceilfors.jenkins.plugins.jiratrigger.JiraChangelogTrigger>
+              </triggers>
+            </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+          </properties>
+          <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2.70">
+            <scm class="hudson.plugins.git.GitSCM" plugin="git@3.10.0">
+              <configVersion>2</configVersion>
+              <userRemoteConfigs>
+                <hudson.plugins.git.UserRemoteConfig>
+                  <url>https://bitbucket.agilesolutions.com/scm/res/springboot-helm-kubernetes.git</url>
+                  <credentialsId>jenkins</credentialsId>
+                </hudson.plugins.git.UserRemoteConfig>
+              </userRemoteConfigs>
+              <branches>
+                <hudson.plugins.git.BranchSpec>
+                  <name>*/master</name>
+                </hudson.plugins.git.BranchSpec>
+              </branches>
+              <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+              <submoduleCfg class="list"/>
+              <extensions/>
+            </scm>
+            <scriptPath>pipelines/jiradeploy/Jenkinsfile</scriptPath>
+            <lightweight>true</lightweight>
+          </definition>
+          <triggers/>
+          <disabled>false</disabled>
+        </flow-definition>
+    Ingress:
+      Annotations:
+        kubernetes.io/ingress.class: "nginx"
+        nginx.ingress.kubernetes.io/ssl-redirect: "false"
+        nginx.ingress.kubernetes.io/proxy-body-size: 50m
+        nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+        ingress.kubernetes.io/ssl-redirect: "false"
+        ingress.kubernetes.io/proxy-body-size: 50m
+        ingress.kubernetes.io/proxy-request-buffering: "off"
+    HostName: jenkins.34.210.146.155.nip.io # Change me!
+    CustomConfigMap: true
+    CredentialsXmlSecret: jenkins-credentials
+    SecretsFilesSecret: jenkins-secrets
+    DockerVM: false
+  rbac:
+    install: true

@@ -1,0 +1,21 @@
+apiVersion: skaffold/v1beta12
+kind: Config
+build:
+  artifacts:
+  - image: com.mycompany/demo
+    jibMaven: {}
+# not on windows read https://skaffold.dev/docs/how-tos/testers/
+#test:
+#  - image: com.mycompany/demo
+#    structureTests:
+#      - './structure-test/*'
+deploy:
+  kubectl:
+    manifests:
+      - k8s-*
+#  helm:
+#    releases:
+#      - name: demo
+#        chartPath: charts/demo
+#        values:
+#          image: com.mycompany/demo

@@ -1,0 +1,11 @@
+## Deletes a HELM beta release
+
+**Arguments:**
+
+* **project**: the name of the project (e.g. `go-demo-3`).
+
+**Requirements:**
+
+* A node with HELM
+* `[PROJECT]-build` Namespace
+* Tiller deployed to the `[PROJECT]-build` Namespace

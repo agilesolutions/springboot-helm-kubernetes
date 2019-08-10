@@ -1,0 +1,50 @@
+import java.text.SimpleDateFormat
+
+pipeline {
+  options {
+    buildDiscarder logRotator(numToKeepStr: '5')
+    disableConcurrentBuilds()
+  }
+  agent {
+    kubernetes {
+      cloud "kubernetes"
+      label "prod"
+      serviceAccount "build"
+      yamlFile "../../KubernetesPod.yaml"
+    }      
+  }
+   parameters {
+      string(name: 'Artifact', defaultValue: '', description: 'Specify artifact to be deployed')
+      string(name: 'Version', defaultValue: '', description: 'Specify version to be deployed')
+    }
+   environment {
+      cmAddr = "cm.host.com"
+  }
+  stages {
+    stage("deploy") {
+      when {
+        branch "master"
+      }
+      steps {
+        container("helm") {
+			k8sUpgrade(params.artifact, params.version)
+        }
+      }
+    }
+    stage("test") {
+      when {
+        branch "master"
+      }
+      steps {
+        echo "Testing..."
+      }
+      post {
+        failure {
+          container("helm") {
+			k8sRollback(params.artifact)
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo
+  namespace: demo  
+  labels:
+    name: demo
+spec:
+  containers:
+  - name: demo
+    image: com.mycompany/demo
+    envFrom:
+    - configMapRef:
+        name: demo

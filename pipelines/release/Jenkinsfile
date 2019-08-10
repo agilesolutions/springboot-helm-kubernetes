@@ -1,0 +1,52 @@
+import java.text.SimpleDateFormat
+
+pipeline {
+  options {
+    buildDiscarder logRotator(numToKeepStr: '5')
+    disableConcurrentBuilds()
+  }
+  agent {
+    kubernetes {
+      cloud "kubernetes"
+      label "release"
+      serviceAccount "build"
+      yamlFile "../../KubernetesPod.yaml"
+    }      
+  }
+  environment {
+    image = readMavenPom().getArtifactId()
+    imagefullname = readMavenPom().getArtifactId() + ":" + readMavenPom().getVersion().replaceAll("SNAPSHOT","").replaceAll("-","")
+    version = readMavenPom().getVersion().replaceAll("SNAPSHOT","").replaceAll("-","")
+    project = readMavenPom().getArtifactId()
+    domain = readMavenPom().getGroupId()
+    cmAddr = "cm.hostname.com"
+  }
+  stages {
+    stage("build") {
+      steps {
+        container("maven") {
+          script {
+            currentBuild.displayName = new SimpleDateFormat("yy.MM.dd").format(new Date()) + "-${env.BUILD_NUMBER}"
+          }
+          k8sBuildMaven("-B")
+        }
+        container("docker") {
+          k8sBuildImage(image, false)
+        }
+      }
+    }
+    stage("release") {
+      when {
+          branch "master"
+      }
+      steps {
+        container("docker") {
+          k8sPushImage(domain, image, version)
+        }
+        container("helm") {
+          k8sPushHelm(project, "", cmAddr, true, true)
+        }
+      }
+    }
+  }
+}

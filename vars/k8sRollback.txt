@@ -1,0 +1,9 @@
+## Rolls back to the previous Helm installation
+
+**Arguments:**
+
+* **project**: the name of the project (e.g. `go-demo-3`).
+
+**Requirements:**
+
+* A node with HELM

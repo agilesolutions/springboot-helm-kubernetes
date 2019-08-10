@@ -1,0 +1,91 @@
+# this guarantees the node will use this template
+def label = "worker-${UUID.randomUUID().toString()}"
+
+podTemplate(label: label, containers: [
+    containerTemplate(name: 'kubectl', image: 'vfarcic/kubectl', ttyEnabled: true, command: 'cat'),
+    containerTemplate(name: 'helm', image: 'vfarcic/helm:2.9.1', command: 'cat', ttyEnabled: true)
+  ]) {
+    node(label) {
+
+        stage('deploy') {
+      		try {
+      			// Get the details on the JIRA ticket triggering this pipeline
+      			jiraGetTicket()
+      			// pass version derived from JIRA ticket
+      			println String.format("Helm upgrade chart %s with version %s", params.artifact, env.VERSION)
+        		container("helm") {
+          			k8sUpgrade(artifact, env.VERSION)
+        		}
+        		container("kubectl") {
+      				println String.format("Rolling out image %s with version %s", params.artifact, env.VERSION)
+          			k8sRollout(artifact)
+        		}
+        		// mark completion status on JIRA ticket
+        		jiraFeedback("deployment ${env.VERSION} through ticket ${env.JIRA_ISSUE_KEY} completed successfully")
+      		} catch(e) {
+        		container("helm") {
+      				println String.format("Rolling out image %s with version %s", params.artifact, env.VERSION)
+          			k8sRollback(artifact)
+        		}
+      		}
+    	}
+
+    }
+}
+
+import java.text.SimpleDateFormat
+
+pipeline {
+  options {
+    buildDiscarder logRotator(numToKeepStr: '5')
+    disableConcurrentBuilds()
+  }
+  agent {
+    kubernetes {
+      cloud "kubernetes"
+      label "prod"
+      serviceAccount "build"
+      yamlFile "../../KubernetesPod.yaml"
+    }      
+  }
+   parameters {
+      string(name: 'Artifact', defaultValue: '', description: 'Specify artifact to be deployed')
+      string(name: 'Version', defaultValue: '', description: 'Specify version to be deployed')
+    }
+   environment {
+      cmAddr = "cm.host.com"
+  }
+  stages {
+    stage("deploy") {
+      when {
+        branch "master"
+      }
+      steps {
+		// Get the details on the JIRA ticket triggering this pipeline
+   		jiraGetTicket()
+        container("helm") {
+			k8sUpgrade(env.ARTIFACT, env.VERSION)
+        }
+      }
+    }
+    stage("test") {
+      when {
+        branch "master"
+      }
+      steps {
+        echo "Testing..."
+      }
+      post {
+        failure {
+          jiraFeedback("deployment ${env.VERSION} through ticket ${env.JIRA_ISSUE_KEY} completed successfully")
+          container("helm") {
+			k8sRollback(params.artifact)
+          }
+        }
+        success {
+          jiraFeedback("deployment ${env.VERSION} through ticket ${env.JIRA_ISSUE_KEY} completed successfully")
+        }
+      }
+    }
+  }
+}

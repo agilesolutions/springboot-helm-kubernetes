@@ -1,0 +1,13 @@
+## Tags and pushes production releases to Docker Hub
+
+An existing image is pulled and tagged as the current build name, as well as `latest`. Both tags are pushed to Docker Hub
+
+**Arguments:**
+
+* **image**: the name of the Docker image (e.g. `vfarcic/go-demo-3`).
+* **sudo**: Whether to prefix commands with `sudo`. Default value is `true`
+
+**Requirements:**
+
+* A node with Docker
+* Docker Hub credentials with the ID **docker**

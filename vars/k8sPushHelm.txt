@@ -1,0 +1,17 @@
+## Packages and pushes a Helm package to ChartMuseum
+
+A local Chart is packaged and pushed toChartMuseum
+
+**Arguments:**
+
+* **project**: The name of the project (e.g. `go-demo-3`).
+* **chartVersion**: The version of the local Chart (e.g. `0.0.1`). If empty, version of the chart will be discovered from the name of the package.
+* **museumAddr**: The full address of a ChartMuseum instance
+* **replaceTag**: Whether to replace `tag: latest` in `helm/[PROJECT]/values.yaml` with the new tag. Default value is `false`.
+* **failIfExists**: Whether to fail the build if the Chart with the same version already exists. Default value is `false`.
+
+**Requirements:**
+
+* A node with HELM and curl
+* Credentials with the ID `chartmuseum`
+* A Chart in `helm/[PROJECT]` directory

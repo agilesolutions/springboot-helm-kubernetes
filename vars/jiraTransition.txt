@@ -1,0 +1,1160 @@
+<h2>mavenProject step</h2>
+<h3>Configuration</h3>
+read : https://docs.atlassian.com/software/jira/docs/api/REST/7.6.1/?_ga=2.219387545.1013423636.1516088245-1166906143.1513075207#api/2/issue-doTransition
+
+
+<h3>check transition fields through this rest calls:</h3>
+<pre>
+https:/jira.agilesolutions.com/rest/api/2/issue/INST-106/transitions?expand=transitions.fields
+
+{  
+   "expand":"transitions",
+   "transitions":[  
+      {  
+         "id":"741",
+         "name":"Submit",
+         "to":{  
+            "self":"https://jira.agilesolutions.com/rest/api/2/status/10002",
+            "description":"The ticket has been handed over for execution.",
+            "iconUrl":"https://jira.agilesolutions.com/images/icons/statuses/assigned.png",
+            "name":"Submitted",
+            "id":"10002",
+            "statusCategory":{  
+               "self":"https://jira.agilesolutions.com/rest/api/2/statuscategory/4",
+               "id":4,
+               "key":"indeterminate",
+               "colorName":"yellow",
+               "name":"In Progress"
+            }
+         },
+         "fields":{  
+            "assignee":{  
+               "required":false,
+               "schema":{  
+                  "type":"user",
+                  "system":"assignee"
+               },
+               "name":"Assignee",
+               "autoCompleteUrl":"https://jira.agilesolutions.com/rest/api/latest/user/assignable/search?issueKey=INST-106&username=",
+               "operations":[  
+                  "set"
+               ]
+            }
+         }
+      },
+      {  
+         "id":"951",
+         "name":"Close",
+         "to":{  
+            "self":"https://jira.agilesolutions.com/rest/api/2/status/6",
+            "description":"The issue is considered finished, the resolution is correct. Issues which are closed can be reopened.",
+            "iconUrl":"https://jira.agilesolutions.com/images/icons/statuses/closed.png",
+            "name":"Closed",
+            "id":"6",
+            "statusCategory":{  
+               "self":"https://jira.agilesolutions.com/rest/api/2/statuscategory/3",
+               "id":3,
+               "key":"done",
+               "colorName":"green",
+               "name":"Done"
+            }
+         },
+         "fields":{  
+            "fixVersions":{  
+               "required":false,
+               "schema":{  
+                  "type":"array",
+                  "items":"version",
+                  "system":"fixVersions"
+               },
+               "name":"Fix Version/s",
+               "operations":[  
+                  "set",
+                  "add",
+                  "remove"
+               ],
+               "allowedValues":[  
+
+               ]
+            },
+            "assignee":{  
+               "required":false,
+               "schema":{  
+                  "type":"user",
+                  "system":"assignee"
+               },
+               "name":"Assignee",
+               "autoCompleteUrl":"https://jira.agilesolutions.com/rest/api/latest/user/assignable/search?issueKey=INST-106&username=",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "resolution":{  
+               "required":true,
+               "schema":{  
+                  "type":"resolution",
+                  "system":"resolution"
+               },
+               "name":"Resolution",
+               "operations":[  
+                  "set"
+               ],
+               "allowedValues":[  
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/1",
+                     "name":"Fixed",
+                     "id":"1"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/6",
+                     "name":"Done",
+                     "id":"6"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/2",
+                     "name":"Won't Fix",
+                     "id":"2"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/3",
+                     "name":"Duplicate",
+                     "id":"3"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/4",
+                     "name":"Incomplete",
+                     "id":"4"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/5",
+                     "name":"Cannot Reproduce",
+                     "id":"5"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/7",
+                     "name":"Obsolete",
+                     "id":"7"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/8",
+                     "name":"To be verified",
+                     "id":"8"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/9",
+                     "name":"Approved",
+                     "id":"9"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/10",
+                     "name":"Declined",
+                     "id":"10"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/11",
+                     "name":"Withdrawn",
+                     "id":"11"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/10100",
+                     "name":"Processed",
+                     "id":"10100"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/10200",
+                     "name":"Failed",
+                     "id":"10200"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/10300",
+                     "name":"Fixed inkl. Deployment",
+                     "id":"10300"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/10400",
+                     "name":"Pending",
+                     "id":"10400"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/10500",
+                     "name":"Won't Do",
+                     "id":"10500"
+                  }
+               ]
+            }
+         }
+      },
+      {  
+         "id":"961",
+         "name":"§ Edit",
+         "to":{  
+            "self":"https://jira.agilesolutions.com/rest/api/2/status/1",
+            "description":"The issue is open and ready for the assignee to start work on it.",
+            "iconUrl":"https://jira.agilesolutions.com/images/icons/statuses/document.png",
+            "name":"Open",
+            "id":"1",
+            "statusCategory":{  
+               "self":"https://jira.agilesolutions.com/rest/api/2/statuscategory/2",
+               "id":2,
+               "key":"new",
+               "colorName":"blue-gray",
+               "name":"To Do"
+            }
+         },
+         "fields":{  
+            "issuetype":{  
+               "required":true,
+               "schema":{  
+                  "type":"issuetype",
+                  "system":"issuetype"
+               },
+               "name":"Issue Type",
+               "operations":[  
+
+               ],
+               "allowedValues":[  
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/issuetype/10100",
+                     "id":"10100",
+                     "description":"",
+                     "iconUrl":"https://jira.agilesolutions.com/secure/viewavatar?size=xsmall&avatarId=18720&avatarType=issuetype",
+                     "name":"Deployment",
+                     "subtask":false,
+                     "avatarId":18720
+                  }
+               ]
+            },
+            "components":{  
+               "required":false,
+               "schema":{  
+                  "type":"array",
+                  "items":"component",
+                  "system":"components"
+               },
+               "name":"Component/s",
+               "operations":[  
+                  "add",
+                  "set",
+                  "remove"
+               ],
+               "allowedValues":[  
+
+               ]
+            },
+            "customfield_10091":{  
+               "required":false,
+               "schema":{  
+                  "type":"datetime",
+                  "custom":"com.atlassian.jira.plugin.system.customfieldtypes:datetime",
+                  "customId":10091
+               },
+               "name":"Deployment Time",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "customfield_10070":{  
+               "required":false,
+               "schema":{  
+                  "type":"string",
+                  "custom":"com.atlassian.jira.plugin.system.customfieldtypes:textarea",
+                  "customId":10070
+               },
+               "name":"Deliverables",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "customfield_10173":{  
+               "required":false,
+               "schema":{  
+                  "type":"string",
+                  "custom":"com.atlassian.jira.plugin.system.customfieldtypes:select",
+                  "customId":10173
+               },
+               "name":"Severity",
+               "operations":[  
+                  "set"
+               ],
+               "allowedValues":[  
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10260",
+                     "value":"High",
+                     "id":"10260"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10261",
+                     "value":"Medium",
+                     "id":"10261"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10262",
+                     "value":"Low",
+                     "id":"10262"
+                  }
+               ]
+            },
+            "description":{  
+               "required":false,
+               "schema":{  
+                  "type":"string",
+                  "system":"description"
+               },
+               "name":"Description",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "fixVersions":{  
+               "required":false,
+               "schema":{  
+                  "type":"array",
+                  "items":"version",
+                  "system":"fixVersions"
+               },
+               "name":"Fix Version/s",
+               "operations":[  
+                  "set",
+                  "add",
+                  "remove"
+               ],
+               "allowedValues":[  
+
+               ]
+            },
+            "customfield_10111":{  
+               "required":false,
+               "schema":{  
+                  "type":"version",
+                  "custom":"com.atlassian.jira.plugin.system.customfieldtypes:version",
+                  "customId":10111
+               },
+               "name":"Detected in Version",
+               "operations":[  
+                  "set"
+               ],
+               "allowedValues":[  
+
+               ]
+            },
+            "customfield_15789":{  
+               "required":false,
+               "schema":{  
+                  "type":"string",
+                  "custom":"com.atlassian.jira.plugin.system.customfieldtypes:textarea",
+                  "customId":15789
+               },
+               "name":"Decision in Workgroup",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "timetracking":{  
+               "required":false,
+               "schema":{  
+                  "type":"timetracking",
+                  "system":"timetracking"
+               },
+               "name":"Time Tracking",
+               "operations":[  
+                  "set",
+                  "edit"
+               ]
+            },
+            "attachment":{  
+               "required":false,
+               "schema":{  
+                  "type":"array",
+                  "items":"attachment",
+                  "system":"attachment"
+               },
+               "name":"Attachment",
+               "operations":[  
+
+               ]
+            },
+            "summary":{  
+               "required":true,
+               "schema":{  
+                  "type":"string",
+                  "system":"summary"
+               },
+               "name":"Summary",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "customfield_10380":{  
+               "required":false,
+               "schema":{  
+                  "type":"number",
+                  "custom":"com.atlassian.jira.plugin.system.customfieldtypes:float",
+                  "customId":10380
+               },
+               "name":"Priority Order",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "customfield_15790":{  
+               "required":false,
+               "schema":{  
+                  "type":"string",
+                  "custom":"com.atlassian.jira.plugin.system.customfieldtypes:textarea",
+                  "customId":15790
+               },
+               "name":"Decision in STC",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "customfield_10480":{  
+               "required":false,
+               "schema":{  
+                  "type":"array",
+                  "items":"string",
+                  "custom":"com.atlassian.jira.plugin.system.customfieldtypes:multiselect",
+                  "customId":10480
+               },
+               "name":"Countries",
+               "operations":[  
+                  "add",
+                  "set",
+                  "remove"
+               ],
+               "allowedValues":[  
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/12298",
+                     "value":"AE",
+                     "id":"12298"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/12290",
+                     "value":"AT",
+                     "id":"12290"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/12292",
+                     "value":"BH",
+                     "id":"12292"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/11603",
+                     "value":"BS",
+                     "id":"11603"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/11604",
+                     "value":"CH",
+                     "id":"11604"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/11605",
+                     "value":"DE",
+                     "id":"11605"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/11606",
+                     "value":"ES",
+                     "id":"11606"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/11607",
+                     "value":"FR",
+                     "id":"11607"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/11608",
+                     "value":"GB",
+                     "id":"11608"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/12300",
+                     "value":"GG",
+                     "id":"12300"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/11894",
+                     "value":"HK",
+                     "id":"11894"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/12299",
+                     "value":"IE",
+                     "id":"12299"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/12291",
+                     "value":"IL",
+                     "id":"12291"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/12217",
+                     "value":"Inf",
+                     "id":"12217"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/11609",
+                     "value":"IT",
+                     "id":"11609"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/12297",
+                     "value":"LB",
+                     "id":"12297"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/11610",
+                     "value":"LU",
+                     "id":"11610"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/11611",
+                     "value":"MC",
+                     "id":"11611"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/11612",
+                     "value":"NL",
+                     "id":"11612"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/13691",
+                     "value":"PA",
+                     "id":"13691"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/11893",
+                     "value":"SG",
+                     "id":"11893"
+                  }
+               ]
+            },
+            "customfield_10063":{  
+               "required":false,
+               "schema":{  
+                  "type":"string",
+                  "custom":"com.atlassian.jira.plugin.system.customfieldtypes:textfield",
+                  "customId":10063
+               },
+               "name":"Change Set number/s",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "reporter":{  
+               "required":true,
+               "schema":{  
+                  "type":"user",
+                  "system":"reporter"
+               },
+               "name":"Reporter",
+               "autoCompleteUrl":"https://jira.agilesolutions.com/rest/api/latest/user/search?username=",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "customfield_10164":{  
+               "required":false,
+               "schema":{  
+                  "type":"string",
+                  "custom":"com.atlassian.jira.plugin.system.customfieldtypes:textfield",
+                  "customId":10164
+               },
+               "name":"Custom 1",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "customfield_10165":{  
+               "required":false,
+               "schema":{  
+                  "type":"string",
+                  "custom":"com.atlassian.jira.plugin.system.customfieldtypes:textfield",
+                  "customId":10165
+               },
+               "name":"Custom 2",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "priority":{  
+               "required":false,
+               "schema":{  
+                  "type":"priority",
+                  "system":"priority"
+               },
+               "name":"Priority",
+               "operations":[  
+                  "set"
+               ],
+               "allowedValues":[  
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/priority/1",
+                     "iconUrl":"https://jira.agilesolutions.com/images/icons/priorities/blocker.png",
+                     "name":"Blocker",
+                     "id":"1"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/priority/2",
+                     "iconUrl":"https://jira.agilesolutions.com/images/icons/priorities/critical.png",
+                     "name":"Critical",
+                     "id":"2"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/priority/3",
+                     "iconUrl":"https://jira.agilesolutions.com/images/icons/priorities/major.png",
+                     "name":"Major",
+                     "id":"3"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/priority/4",
+                     "iconUrl":"https://jira.agilesolutions.com/images/icons/priorities/minor.png",
+                     "name":"Minor",
+                     "id":"4"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/priority/5",
+                     "iconUrl":"https://jira.agilesolutions.com/images/icons/priorities/trivial.png",
+                     "name":"Trivial",
+                     "id":"5"
+                  }
+               ]
+            },
+            "customfield_10100":{  
+               "required":false,
+               "schema":{  
+                  "type":"user",
+                  "custom":"com.atlassian.jira.plugin.system.customfieldtypes:userpicker",
+                  "customId":10100
+               },
+               "name":"Business Representative",
+               "autoCompleteUrl":"https://jira.agilesolutions.com/rest/api/1.0/users/picker?fieldName=customfield_10100&query=",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "customfield_10166":{  
+               "required":false,
+               "schema":{  
+                  "type":"string",
+                  "custom":"com.atlassian.jira.plugin.system.customfieldtypes:textfield",
+                  "customId":10166
+               },
+               "name":"Custom 3",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "customfield_10101":{  
+               "required":false,
+               "schema":{  
+                  "type":"string",
+                  "custom":"com.atlassian.jira.plugin.system.customfieldtypes:select",
+                  "customId":10101
+               },
+               "name":"Detected In",
+               "operations":[  
+                  "set"
+               ],
+               "allowedValues":[  
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10130",
+                     "value":"AT",
+                     "id":"10130"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10131",
+                     "value":"AT1",
+                     "id":"10131"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10132",
+                     "value":"AT2",
+                     "id":"10132"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10150",
+                     "value":"AT3",
+                     "id":"10150"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10133",
+                     "value":"DEV",
+                     "id":"10133"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10134",
+                     "value":"DEV1",
+                     "id":"10134"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10135",
+                     "value":"DEV2",
+                     "id":"10135"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10151",
+                     "value":"DEV3",
+                     "id":"10151"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/20392",
+                     "value":"DEV4",
+                     "id":"20392"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10136",
+                     "value":"DEV5",
+                     "id":"10136"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10230",
+                     "value":"DMZ-LAB",
+                     "id":"10230"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10231",
+                     "value":"DMZ-PROD",
+                     "id":"10231"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/17805",
+                     "value":"DressRehearsal",
+                     "id":"17805"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10137",
+                     "value":"EDU",
+                     "id":"10137"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10143",
+                     "value":"ER",
+                     "id":"10143"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10140",
+                     "value":"INT",
+                     "id":"10140"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10263",
+                     "value":"INTG1",
+                     "id":"10263"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10264",
+                     "value":"INTG2",
+                     "id":"10264"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/19425",
+                     "value":"L&P",
+                     "id":"19425"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10200",
+                     "value":"LAB",
+                     "id":"10200"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/18890",
+                     "value":"MIG1",
+                     "id":"18890"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/18891",
+                     "value":"MIG2",
+                     "id":"18891"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/18892",
+                     "value":"MIG3",
+                     "id":"18892"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/18893",
+                     "value":"MIG4",
+                     "id":"18893"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/19891",
+                     "value":"MIG5",
+                     "id":"19891"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/17806",
+                     "value":"Migration",
+                     "id":"17806"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10144",
+                     "value":"other",
+                     "id":"10144"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/17804",
+                     "value":"Parallel",
+                     "id":"17804"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/17794",
+                     "value":"Pre-SIT1",
+                     "id":"17794"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/17795",
+                     "value":"Pre-SIT2",
+                     "id":"17795"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/17796",
+                     "value":"Pre-SIT3",
+                     "id":"17796"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/17797",
+                     "value":"Pre-SIT4",
+                     "id":"17797"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10142",
+                     "value":"PROD",
+                     "id":"10142"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/17807",
+                     "value":"Regression",
+                     "id":"17807"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/17798",
+                     "value":"SIT1",
+                     "id":"17798"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/17799",
+                     "value":"SIT2",
+                     "id":"17799"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/17800",
+                     "value":"SIT3",
+                     "id":"17800"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/17801",
+                     "value":"SIT4",
+                     "id":"17801"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/19505",
+                     "value":"SIT5",
+                     "id":"19505"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/19506",
+                     "value":"SIT6",
+                     "id":"19506"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/19890",
+                     "value":"SIT7",
+                     "id":"19890"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10141",
+                     "value":"SYT",
+                     "id":"10141"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10295",
+                     "value":"TEST",
+                     "id":"10295"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10138",
+                     "value":"UAT",
+                     "id":"10138"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/17808",
+                     "value":"UAT1",
+                     "id":"17808"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10139",
+                     "value":"UAT2",
+                     "id":"10139"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/17802",
+                     "value":"UAT3",
+                     "id":"17802"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/17803",
+                     "value":"UAT4",
+                     "id":"17803"
+                  }
+               ]
+            },
+            "customfield_10102":{  
+               "required":false,
+               "schema":{  
+                  "type":"string",
+                  "custom":"com.atlassian.jira.plugin.system.customfieldtypes:textfield",
+                  "customId":10102
+               },
+               "name":"External Reference",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "labels":{  
+               "required":false,
+               "schema":{  
+                  "type":"array",
+                  "items":"string",
+                  "system":"labels"
+               },
+               "name":"Labels",
+               "autoCompleteUrl":"https://jira.agilesolutions.com/rest/api/1.0/labels/suggest?query=",
+               "operations":[  
+                  "add",
+                  "set",
+                  "remove"
+               ]
+            },
+            "customfield_10103":{  
+               "required":false,
+               "schema":{  
+                  "type":"string",
+                  "custom":"com.atlassian.jira.plugin.system.customfieldtypes:radiobuttons",
+                  "customId":10103
+               },
+               "name":"Front Relevant",
+               "operations":[  
+                  "set"
+               ],
+               "allowedValues":[  
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10146",
+                     "value":"yes",
+                     "id":"10146"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/customFieldOption/10147",
+                     "value":"no",
+                     "id":"10147"
+                  }
+               ]
+            },
+            "customfield_10004":{  
+               "required":false,
+               "schema":{  
+                  "type":"string",
+                  "custom":"com.atlassian.jira.plugin.system.customfieldtypes:textarea",
+                  "customId":10004
+               },
+               "name":"Instructions for Deployment",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "environment":{  
+               "required":false,
+               "schema":{  
+                  "type":"string",
+                  "system":"environment"
+               },
+               "name":"Environment",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "versions":{  
+               "required":false,
+               "schema":{  
+                  "type":"array",
+                  "items":"version",
+                  "system":"versions"
+               },
+               "name":"Affects Version/s",
+               "operations":[  
+                  "set",
+                  "add",
+                  "remove"
+               ],
+               "allowedValues":[  
+
+               ]
+            },
+            "duedate":{  
+               "required":false,
+               "schema":{  
+                  "type":"date",
+                  "system":"duedate"
+               },
+               "name":"Due Date",
+               "operations":[  
+                  "set"
+               ]
+            },
+            "issuelinks":{  
+               "required":false,
+               "schema":{  
+                  "type":"array",
+                  "items":"issuelinks",
+                  "system":"issuelinks"
+               },
+               "name":"Linked Issues",
+               "autoCompleteUrl":"https://jira.agilesolutions.com/rest/api/2/issue/picker?currentProjectId=&showSubTaskParent=true&showSubTasks=true&currentIssueKey=INST-106&query=",
+               "operations":[  
+                  "add"
+               ]
+            },
+            "worklog":{  
+               "required":false,
+               "schema":{  
+                  "type":"array",
+                  "items":"worklog",
+                  "system":"worklog"
+               },
+               "name":"Log Work",
+               "operations":[  
+                  "add"
+               ]
+            },
+            "assignee":{  
+               "required":false,
+               "schema":{  
+                  "type":"user",
+                  "system":"assignee"
+               },
+               "name":"Assignee",
+               "autoCompleteUrl":"https://jira.agilesolutions.com/rest/api/latest/user/assignable/search?issueKey=INST-106&username=",
+               "operations":[  
+                  "set"
+               ]
+            }
+         }
+      },
+      {  
+         "id":"1021",
+         "name":"§ Resolution",
+         "to":{  
+            "self":"https://jira.agilesolutions.com/rest/api/2/status/1",
+            "description":"The issue is open and ready for the assignee to start work on it.",
+            "iconUrl":"https://jira.agilesolutions.com/images/icons/statuses/document.png",
+            "name":"Open",
+            "id":"1",
+            "statusCategory":{  
+               "self":"https://jira.agilesolutions.com/rest/api/2/statuscategory/2",
+               "id":2,
+               "key":"new",
+               "colorName":"blue-gray",
+               "name":"To Do"
+            }
+         },
+         "fields":{  
+            "resolution":{  
+               "required":true,
+               "schema":{  
+                  "type":"resolution",
+                  "system":"resolution"
+               },
+               "name":"Resolution",
+               "operations":[  
+                  "set"
+               ],
+               "allowedValues":[  
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/1",
+                     "name":"Fixed",
+                     "id":"1"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/6",
+                     "name":"Done",
+                     "id":"6"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/2",
+                     "name":"Won't Fix",
+                     "id":"2"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/3",
+                     "name":"Duplicate",
+                     "id":"3"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/4",
+                     "name":"Incomplete",
+                     "id":"4"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/5",
+                     "name":"Cannot Reproduce",
+                     "id":"5"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/7",
+                     "name":"Obsolete",
+                     "id":"7"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/8",
+                     "name":"To be verified",
+                     "id":"8"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/9",
+                     "name":"Approved",
+                     "id":"9"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/10",
+                     "name":"Declined",
+                     "id":"10"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/11",
+                     "name":"Withdrawn",
+                     "id":"11"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/10100",
+                     "name":"Processed",
+                     "id":"10100"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/10200",
+                     "name":"Failed",
+                     "id":"10200"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/10300",
+                     "name":"Fixed inkl. Deployment",
+                     "id":"10300"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/10400",
+                     "name":"Pending",
+                     "id":"10400"
+                  },
+                  {  
+                     "self":"https://jira.agilesolutions.com/rest/api/2/resolution/10500",
+                     "name":"Won't Do",
+                     "id":"10500"
+                  }
+               ]
+            }
+         }
+      }
+   ]
+}
+</pre>
+

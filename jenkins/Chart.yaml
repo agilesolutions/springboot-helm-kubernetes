@@ -1,0 +1,7 @@
+apiVersion: v1
+name: prod-env
+version: 0.0.1
+description: Production Environment
+maintainers:
+- name: Robert Rong
+  email: robert.rong@agilesolutions.com

@@ -60,8 +60,8 @@ If you need to use HTTP/2 features for your application, you have to pass throug
 
 NGINX provides the option to configure a server as a catch-all with server_name for requests that do not match any of the configured server names. This configuration works without out-of-the-box for HTTP traffic. For HTTPS, a certificate is naturally required.
 
-[This is going to be setup - Quick-Start using Cert-Manager with NGINX Ingress](https://docs.cert-manager.io/en/latest/tutorials/acme/quick-start/)
-[Deploy the NGINX Ingress Controller]{https://docs.cert-manager.io/en/latest/tutorials/acme/quick-start/#step-2-deploy-the-nginx-ingress-controller}
+* [This is going to be setup - Quick-Start using Cert-Manager with NGINX Ingress](https://docs.cert-manager.io/en/latest/tutorials/acme/quick-start/)
+* [Deploy the NGINX Ingress Controller](https://docs.cert-manager.io/en/latest/tutorials/acme/quick-start/#step-2-deploy-the-nginx-ingress-controller)
 
 ```
 $ openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ${KEY_FILE} -out ${CERT_FILE} -subj "/CN=${HOST}/O=${HOST}"

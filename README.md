@@ -55,6 +55,13 @@ mvn compile jib:build
 ```
 
 
+# About demo app and nginx Inress and certificate management (to be followed up)
+If you need to use HTTP/2 features for your application, you have to pass through the HTTPS connection directly to your backend, even if the proxy used HTTPS internally then you still wouldn't have an end-to-end encryption. For these cases the Ingress controller has an option to enable SSL/TLS pass through. At first you have to install the Ingress controller with a specific parameter, to make SSL/TLS pass through available as a feature (if an Ingress controller is already installed, you have to remove it first)
+
+1. [cert-manager is a Kubernetes addon to automate the management and issuance of TLS certificates from various issuing sources](https://github.com/jetstack/cert-manager/tree/master/deploy/charts/cert-manager)
+2. [Using Ingress with SSL/TLS termination and HTTP/2](https://www.thenativeweb.io/blog/2018-07-03-16-17-kubernetes-using-ingress-with-ssl-tls-termination-and-http2/#passing-through-https-and-http%2F2-with-ingress)
+3. [NGINX Ingress Controller](https://kubernetes.github.io/ingress-nginx/user-guide/tls/)
+
 
 ## Developer Notes
 
@@ -64,6 +71,7 @@ Copy skaffold and kubectl binaries from W:\k8s, put both exe's on your windows P
 
 ```
 kubectl config --kubeconfig=./config/development.conf use-context development
+
 ```
 
 ## install HELM

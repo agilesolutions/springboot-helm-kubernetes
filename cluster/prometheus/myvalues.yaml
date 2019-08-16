@@ -947,16 +947,23 @@ alertmanagerFiles:
       # slack_api_url: ''
 
     receivers:
-      - name: default-receiver
-        # slack_configs:
-        #  - channel: '@you'
-        #    send_resolved: true
+      - name: alert-emailer
+        email_configs:
+        - to: 'receiver@example.com'
+          send_resolved: false
+          from: 'sender@example.com'
+          smarthost: 'smtp.example.com:587'
+          auth_username: 'sender@example.com'
+          auth_password: 'IamPassword'
+          auth_secret: 'sender@example.com'
+          auth_identity: 'sender@example.com'
 
     route:
       group_wait: 10s
       group_interval: 5m
-      receiver: default-receiver
+      receiver: alert-emailer
       repeat_interval: 3h
+      group_by: ['alertname', 'priority']
 
 ## Prometheus server ConfigMap entries
 ##

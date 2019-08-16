@@ -25,7 +25,6 @@
 		<spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
 		<testcontainers.version>1.10.6</testcontainers.version>
 		<swagger2.version>2.4.0</swagger2.version>
-		<logstash-logback.version>4.9</logstash-logback.version>
 		<maven.test.skip>true</maven.test.skip>
 
 	</properties>
@@ -62,6 +61,11 @@
 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-sleuth</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-kubernetes</artifactId>
 			<version>0.3.0.RELEASE</version>
 		</dependency>
@@ -79,10 +83,11 @@
 		</dependency>
 
 		<dependency>
-			<groupId>net.logstash.logback</groupId>
-			<artifactId>logstash-logback-encoder</artifactId>
-			<version>${logstash-logback.version}</version>
+			<groupId>org.fluentd</groupId>
+			<artifactId>fluent-logger</artifactId>
+			<version>0.3.3</version>
 		</dependency>
+
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>

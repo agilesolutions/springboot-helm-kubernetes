@@ -2,7 +2,7 @@ replicaCount: 1
 revisionHistoryLimit: 1
 
 
-image: com.mycompany/demo:latest
+image: agilesolutions/demo:latest
 pullPolicy: IfNotPresent
 resources:
   requests:

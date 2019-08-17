@@ -4,7 +4,7 @@
 
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <property name="FLUENTD_HOST" value="${FLUENTD_HOST:-${DOCKER_HOST:-localhost}}"/>
+    <!--  -property name="FLUENTD_HOST" value="${FLUENTD_HOST:-${DOCKER_HOST:-localhost}}"/>
     <property name="FLUENTD_PORT" value="${FLUENTD_PORT:-24224}"/>
     <appender name="FLUENT" class="ch.qos.logback.more.appenders.DataFluentAppender">
         <tag>dab</tag>
@@ -27,5 +27,5 @@
     </springProfile>
 
     <logger name="org.springframework" level="INFO"/>
-    <logger name="com.mycompany" level="DEBUG"/>
+    <logger name="com.mycompany" level="DEBUG"/-->
 </configuration>

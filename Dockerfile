@@ -1,7 +1,7 @@
 FROM fabric8/java-alpine-openjdk8-jre
 VOLUME /tmp
 ARG version
-ADD target/demo-${version}.jar myapp.jar
+ADD target/demo-1.0-SNAPSHOT.jar myapp.jar
 RUN sh -c 'touch /myapp.jar'
 ENV JAVA_OPTS="-Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=8787,suspend=n"
 ENV SPRING_PROFILES_ACTIVE "docker"

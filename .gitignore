@@ -1,4 +1,4 @@
-/target/
+#/target/
 /node_modules/
 !.mvn/wrapper/maven-wrapper.jar
 
@@ -25,3 +25,4 @@
 /nbdist/
 /.nb-gradle/
 /bin/
+/target/

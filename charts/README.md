@@ -4,7 +4,7 @@
 * git clone https://github.com/agilesolutions/springboot-helm-kubernetes.git
 * cd springboot-helm-kubernetes/charts
 * helm inspect minimal
-* helm install minimal
+* helm install --set name=demo minimal
 * helm ls minimal
 * kubectl logs -f xxx -n demo
 * kubectl exec xxx -n demo -- ls /tmp 

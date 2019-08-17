@@ -1,0 +1,32 @@
+replicaCount: 1
+revisionHistoryLimit: 1
+
+
+image: agilesolutions/demo:latest
+pullPolicy: IfNotPresent
+resources:
+  requests:
+    cpu: 200m
+    memory: 300Mi
+
+livenessProbe:
+  initialDelaySeconds: 15
+  periodSeconds: 5
+readinessProbe:
+  initialDelaySeconds: 15
+  periodSeconds: 5
+service:
+  type: ClusterIP
+  name: demo
+  servicePort: 8080
+ingress:
+  enabled: true
+  domain: local
+  tls:
+    enabled: false
+    secretName: demo-ingress-tls
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"

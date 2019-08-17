@@ -1,0 +1,28 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: "{{ .Chart.Name }}"
+  namespace: "{{  .Chart.Name }}"
+  labels:
+    chart: '{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}'
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+{{- if .Values.ingress.tls.enabled }}
+  tls:
+    - hosts:
+      - '{{- .Chart.Name }}.{{- required "ingress.domain is required!" .Values.ingress.domain }}'
+      secretName: '{{- .Values.ingress.tls.secretName }}'
+{{- end }}
+  rules:
+    - host: '{{- .Chart.Name }}.{{- required "ingress.domain is required!" .Values.ingress.domain }}'
+      http:
+        paths:
+          - path: '/'
+            backend:
+              serviceName: {{ .Values.service.name }}
+              servicePort: http
+{{- end }}

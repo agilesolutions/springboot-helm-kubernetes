@@ -1,6 +1,7 @@
 #!/bin/bash
 cd nginx
-helm install --name nginx--values myvalues.yaml --namespace nginx . --dry-run
+# This command installs the Nginx Ingress Controller from the stable charts repository, names the Helm release nginx-ingress, and sets the publishService parameter to true.
+helm install --name nginx --set controller.publishService.enabled=true --values myvalues.yaml --namespace nginx .
 cd ../prometheus
 helm install --name prometheus --values myvalues.yaml --namespace prometheus .
 cd ../fluentd

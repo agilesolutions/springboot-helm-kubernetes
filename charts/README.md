@@ -11,5 +11,7 @@
 * kubectl exec xxx -n demo -- cat /tmp/spring.log
 * kubectl exec -ti xxx -n  demo -- bin/sh
 * kubectl get pods -n demo
-* kubectl run demo --image=agilesolutions/demo:latest --replicas=1  
+* kubectl run demo --image=agilesolutions/demo:latest --replicas=1
+* kubectl delete deploy/demo
+* kubectl run demo -ti  --image=agilesolutions/demo:latest --command -- /bin/sh
 * [read how to debug pods on kubernetes](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-application/)

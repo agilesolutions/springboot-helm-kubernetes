@@ -2,7 +2,7 @@ apiVersion: skaffold/v1beta12
 kind: Config
 build:
   artifacts:
-  - image: com.mycompany/demo
+  - image: agilesolutions/demo:latest
     jibMaven: {}
 # not on windows read https://skaffold.dev/docs/how-tos/testers/
 #test:

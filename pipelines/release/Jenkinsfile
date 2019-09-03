@@ -10,7 +10,7 @@ pipeline {
       cloud "kubernetes"
       label "release"
       serviceAccount "build"
-      yamlFile "../../KubernetesPod.yaml"
+      yamlFile "../KubernetesPod.yaml"
     }      
   }
   environment {
